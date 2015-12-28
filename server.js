@@ -33,6 +33,7 @@ app.get('/api/messungen', function (req, res) {
   			return console.dir(err); 
   		}
 
+  		MongoClient.close();
   		res.send(items);
 	  });
 
@@ -40,6 +41,12 @@ app.get('/api/messungen', function (req, res) {
 });
 
 app.post('/api/messungen', function (req, res) {
+	// validate that at least temperature is there
+	if (!req.body.hasOwnProperty('temperatur')) {
+		res.sendStatus(400);
+		return;
+	}
+
 	MongoClient.connect(connString, function(err, db) {
 	  if (err) { 
 	  	res.status(500).send(err);
@@ -53,6 +60,7 @@ app.post('/api/messungen', function (req, res) {
 	  		res.status(500).send(err);
 	  		return console.dir(err);
 	  	}
+	  	MongoClient.close();
 	  	res.sendStatus(200);
 	  });
 
