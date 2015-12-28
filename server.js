@@ -1,11 +1,15 @@
 var express = require('express');
 var app = express();
 
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
+
 var MongoClient = require('mongodb').MongoClient;
 var mongoUser = 'admin';
 var mongoPassword = '_aakgdPANeUP';
 var mongoHost = process.env.OPENSHIFT_MONGODB_DB_HOST;
 var mongoPort = process.env.OPENSHIFT_MONGODB_DB_PORT;
+var connString = "mongodb://" + mongoUser + ":" +  mongoPassword + "@" + mongoHost + ":" + mongoPort + "/home";
 
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
@@ -16,20 +20,39 @@ app.get('/', function (req, res) {
 });
 
 app.get('/api/messungen', function (req, res) {
-	MongoClient.connect("mongodb://" + mongoUser + ":" +  mongoPassword + "@" + mongoHost + ":" + mongoPort + "/home", function(err, db) {
+	MongoClient.connect(connString, function(err, db) {
 	  if (err) { 
-	  	res.send(err);
+	  	res.status(500).send(err);
 	  	return console.dir(err); 
 	  }
 
 	  var collection = db.collection('messungen');
 	  collection.find().toArray(function (err, items) {
   		if (err) { 
-  			res.send(err);
+  			res.status(500).send(err);
   			return console.dir(err); 
   		}
 
   		res.send(items);
+	  });
+
+	});
+});
+
+app.post('/api/messungen', function (req, res) {
+	MongoClient.connect(connString, function(err, db) {
+	  if (err) { 
+	  	res.status(500).send(err);
+	  	return console.dir(err); 
+	  }
+
+	  var collection = db.collection('messungen');
+	  collection.insert(req.body, function (err, result) {
+	  	if (err) {
+	  		res.status(500).send(err);
+	  		return console.dir(err);
+	  	}
+	  	res.sendStatus(200);
 	  });
 
 	});
