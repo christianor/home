@@ -33,7 +33,7 @@ app.get('/api/messungen', function (req, res) {
   			return console.dir(err); 
   		}
 
-  		MongoClient.close();
+  		db.close();
   		res.send(items);
 	  });
 
@@ -60,7 +60,7 @@ app.post('/api/messungen', function (req, res) {
 	  		res.status(500).send(err);
 	  		return console.dir(err);
 	  	}
-	  	MongoClient.close();
+	  	db.close();
 	  	res.sendStatus(200);
 	  });
 
