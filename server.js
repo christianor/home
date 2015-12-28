@@ -16,14 +16,14 @@ app.get('/', function (req, res) {
 });
 
 app.get('/api/messungen', function (req, res) {
-	MongoClient.connect("mongodb://" + mongoHost + ":" + mongoPort + "/home", function(err, db) {
+	MongoClient.connect("mongodb://" + mongoUser + ":" +  mongoPassword + "@" + mongoHost + ":" + mongoPort + "/home", function(err, db) {
 	  if (err) { 
 	  	res.send(err);
 	  	return console.dir(err); 
 	  }
 
 	  var collection = db.collection('messungen');
-	  collection.find().toArray().toArray(function (err, items) {
+	  collection.find().toArray(function (err, items) {
   		if (err) { 
   			res.send(err);
   			return console.dir(err); 
