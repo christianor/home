@@ -47,6 +47,7 @@ app.post('/api/messungen', function (req, res) {
 	  }
 
 	  var collection = db.collection('messungen');
+	  console.log(req.body);
 	  collection.insert(req.body, function (err, result) {
 	  	if (err) {
 	  		res.status(500).send(err);
