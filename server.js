@@ -52,6 +52,7 @@ app.post('/api/messungen', function (req, res) {
 	  		res.status(500).send(err);
 	  		return console.dir(err);
 	  	}
+	  	res.sendStatus(200);
 	  });
 
 	});
