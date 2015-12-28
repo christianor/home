@@ -42,10 +42,12 @@ app.get('/api/messungen', function (req, res) {
 
 app.post('/api/messungen', function (req, res) {
 	// validate that at least temperature is there
-	if (!req.body.hasOwnProperty('temperatur')) {
+	if (!req.body.hasOwnProperty('temperatur') || !req.body.hasOwnProperty('zeit')) {
 		res.sendStatus(400);
 		return;
 	}
+
+	req.body.zeit = new Date(req.body.zeit);
 
 	MongoClient.connect(connString, function(err, db) {
 	  if (err) { 
