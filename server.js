@@ -5,6 +5,7 @@ var cors = require('cors');
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(cors());
+app.use('/static', express.static(__dirname + '/public'));
 
 var MongoClient = require('mongodb').MongoClient;
 var mongoUser = 'admin';
