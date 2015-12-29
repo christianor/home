@@ -44,6 +44,27 @@ app.get('/api/messungen', function (req, res) {
 	});
 });
 
+app.get('/api/messungen/current', function (req, res) {
+	MongoClient.connect(connString, function(err, db) {
+	  if (err) { 
+	  	res.status(500).send(err);
+	  	return console.dir(err); 
+	  }
+
+	  var collection = db.collection('messungen');
+	  collection.findOne({ }).sort({ zeit: -1 }).limit(1).toArray(function (err, item) {
+  		if (err) { 
+  			res.status(500).send(err);
+  			return console.dir(err); 
+  		}
+
+  		db.close();
+  		res.send(item);
+	  });
+
+	});
+});
+
 app.post('/api/messungen', function (req, res) {
 	// validate that at least temperature is there
 	if (!req.body.hasOwnProperty('temperatur') || !req.body.hasOwnProperty('zeit')) {

@@ -46,10 +46,10 @@
 			    	// map data
 			    	var messungen = {};
 			    	messungen.labels = [];
-			    	messungen.series = ['Wohnzimmer', 'Gefuehlt', 'Aussen'];
+			    	messungen.series = ['Wohnzimmer', 'Gefühlt', 'Aussen'];
 			    	messungen.data = [[], [], []];
 					angular.forEach(response.data, function(value, key){
-						messungen.labels.push(value.zeit);
+						messungen.labels.push(new Date(value.zeit);
 						messungen.data[0].push(value.temperatur);
 						messungen.data[1].push(value.temperatur_gefuehlt);
 						messungen.data[2].push(value.temperatur_aussen);
