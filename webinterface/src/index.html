@@ -29,17 +29,43 @@
 	<script type="text/javascript">
 		var tempMon = angular.module('tempMon', ['chart.js']);
 
-		tempMon.controller('ChartController', ['$scope', function ($scope) {
-			$scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-			$scope.series = ['Series A', 'Series B'];
-			$scope.data = [
-				[65, 59, 80, 81, 56, 55, 40],
-				[28, 48, 40, 19, 86, 27, 90]
-				];
+		tempMon.controller('ChartController', ['$scope', 'TemperatureService', 
+			function ($scope, TemperatureService) {
 
-			$scope.onClick = function (points, evt) {
-				console.log(points, evt);
-			};
+				TemperatureService.getData().then(function (messungen) {
+					$scope.labels = messungen.labels;
+					$scope.data = messungen.data;
+					$scope.series = messungen.series;
+				});
+
+				$scope.onClick = function (points, evt) {
+					console.log(points, evt);
+				};
+		}]);
+
+		tempMon.service('TemperatureService', ['$http', '$q', function ($http, $q) {
+			var service = {};
+
+			service.url = 'http://home-ortiz.rhcloud.com/api/messungen';
+			service.getData = function () 
+			{
+				return $http({ method: 'GET', url: this.url }).then(function (response) {
+			    	// map data
+			    	var messungen = {};
+			    	messungen.labels = [];
+			    	messungen.series = ['Wohnzimmer', 'Gefuehlt', 'Aussen'];
+			    	messungen.data = [[], [], []];
+					angular.forEach(response.data, function(value, key){
+						messungen.labels.push(value.zeit);
+						messungen.data[0].push(value.temperatur);
+						messungen.data[1].push(value.temperatur_gefuehlt);
+						messungen.data[2].push(value.temperatur_aussen);
+					});
+
+			    	return messungen;
+			  	});
+			}
+			return service;
 		}]);
 	</script>
 </body>

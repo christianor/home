@@ -29,7 +29,7 @@ app.get('/api/messungen', function (req, res) {
 	  }
 
 	  var collection = db.collection('messungen');
-	  collection.find().toArray(function (err, items) {
+	  collection.find({ zeit: { $gte: new Date(ISODate().getTime() - 1000 * 60 * 60)} }).toArray(function (err, items) {
   		if (err) { 
   			res.status(500).send(err);
   			return console.dir(err); 
