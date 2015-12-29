@@ -3,6 +3,7 @@ var app = express();
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
+app.use(cors());
 
 var MongoClient = require('mongodb').MongoClient;
 var mongoUser = 'admin';
