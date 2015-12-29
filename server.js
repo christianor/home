@@ -52,14 +52,14 @@ app.get('/api/messungen/current', function (req, res) {
 	  }
 
 	  var collection = db.collection('messungen');
-	  collection.findOne({ }).sort({ zeit: -1 }).limit(1).toArray(function (err, item) {
+	  collection.find().sort({ zeit: -1 }).limit(1).toArray(function (err, items) {
   		if (err) { 
   			res.status(500).send(err);
   			return console.dir(err); 
   		}
 
   		db.close();
-  		res.send(item);
+  		res.send(items[0]);
 	  });
 
 	});
