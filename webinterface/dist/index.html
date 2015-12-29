@@ -1,0 +1,65 @@
+<html>
+<head>
+	<title>ortiz home temp monitor</title>
+	<!-- inject:css -->
+	<link rel="stylesheet" href="css/vendor.css">
+	<!-- endinject -->
+</head>
+<body ng-app="tempMon">
+	<div class="container">
+		<h1>Messungen</h1>	
+		<div ng-controller="ChartController">
+			<canvas id="line" class="chart chart-line" chart-data="data"
+			  chart-labels="labels" chart-legend="true" chart-series="series"
+			  chart-click="onClick" >
+		</canvas> 
+		</div>
+	</div>
+	
+	<!-- inject:js -->
+	<script src="js/vendor.js"></script>
+	<!-- endinject -->
+	<script type="text/javascript">
+		var tempMon = angular.module('tempMon', ['chart.js']);
+
+		tempMon.controller('ChartController', ['$scope', 'TemperatureService', 
+			function ($scope, TemperatureService) {
+
+				TemperatureService.getData().then(function (messungen) {
+					$scope.labels = messungen.labels;
+					$scope.data = messungen.data;
+					$scope.series = messungen.series;
+				});
+
+				$scope.onClick = function (points, evt) {
+					console.log(points, evt);
+				};
+		}]);
+
+		tempMon.service('TemperatureService', ['$http', '$q', function ($http, $q) {
+			var service = {};
+
+			service.url = 'http://home-ortiz.rhcloud.com/api/messungen';
+			service.getData = function () 
+			{
+				return $http({ method: 'GET', url: this.url }).then(function (response) {
+			    	// map data
+			    	var messungen = {};
+			    	messungen.labels = [];
+			    	messungen.series = ['Wohnzimmer', 'Gefuehlt', 'Aussen'];
+			    	messungen.data = [[], [], []];
+					angular.forEach(response.data, function(value, key){
+						messungen.labels.push(value.zeit);
+						messungen.data[0].push(value.temperatur);
+						messungen.data[1].push(value.temperatur_gefuehlt);
+						messungen.data[2].push(value.temperatur_aussen);
+					});
+
+			    	return messungen;
+			  	});
+			}
+			return service;
+		}]);
+	</script>
+</body>
+</html>
