@@ -1,3 +1,3 @@
-The OpenShift `nodejs` cartridge documentation can be found at:
+Temperature Rest Service + Visual Interface
 
-http://openshift.github.io/documentation/oo_cartridge_guide.html#nodejs
+- Ready for openshift deployment (diy cartridge)
