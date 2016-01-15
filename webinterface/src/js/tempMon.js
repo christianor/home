@@ -43,7 +43,10 @@ tempMon.service('TemperatureService', ['$http', '$q', function ($http, $q) {
 				messungen.labels.push(zeit.getHours() + ":" + (zeit.getMinutes() < 10 ? "0" : "" ) + zeit.getMinutes());
 				messungen.data[0].push(value.temperatur);
 				messungen.data[1].push(value.temperatur_gefuehlt);
-				messungen.data[2].push(value.temperatur_aussen);
+				if (!value.temperatur_aussen)
+					messungen.data[2].push(0);
+				else
+					messungen.data[2].push(value.temperatur_aussen);
 			});
 
 	    	return messungen;
