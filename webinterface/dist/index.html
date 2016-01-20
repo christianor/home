@@ -1,9 +1,11 @@
+<!DOCTYPE html>
 <html>
 <head>
 	<title>ortiz home temp monitor</title>
 	<!-- vendor:css -->
 	<link rel="stylesheet" href="css/vendor.css">
 	<!-- endinject -->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body ng-app="tempMon">
 	<div class="container">
@@ -26,15 +28,15 @@
 				</tbody>
 			</table>
 	    </div>
-		<h1>Letzte Stunde</h1>	
+		<h1>Letzte Stunde</h1>
 		<div ng-controller="ChartController">
 			<canvas id="line" class="chart chart-line" chart-data="data"
 			  chart-labels="labels" chart-legend="true" chart-series="series"
 			  chart-click="onClick" >
-		</canvas> 
+		</canvas>
 		</div>
 	</div>
-	
+
 	<!-- vendor:js -->
 	<script src="js/vendor.js"></script>
 	<!-- endinject -->
