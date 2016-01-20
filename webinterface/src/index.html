@@ -1,11 +1,13 @@
+<!DOCTYPE html>
 <html>
 <head>
 	<title>ortiz home temp monitor</title>
 	<!-- vendor:css -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" 
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
 	  integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	  <link rel="stylesheet" href="../bower_components/angular-chart.js/dist/angular-chart.css">
     <!-- endinject -->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body ng-app="tempMon">
 	<div class="container">
@@ -28,18 +30,18 @@
 				</tbody>
 			</table>
 	    </div>
-		<h1>Letzte Stunde</h1>	
+		<h1>Letzte Stunde</h1>
 		<div ng-controller="ChartController">
 			<canvas id="line" class="chart chart-line" chart-data="data"
 			  chart-labels="labels" chart-legend="true" chart-series="series"
 			  chart-click="onClick" >
-		</canvas> 
+		</canvas>
 		</div>
 	</div>
-	
+
 	<!-- vendor:js -->
 	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" 
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
 	  integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 	<script src="../bower_components/Chart.js/Chart.min.js"></script>
